@@ -1,0 +1,22 @@
+name: Infrastructure quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose config --quiet
+      - run: |
+          if grep -R --line-number -E 'image: .+:latest' docker-compose.yml; then
+            echo "Container images must use pinned versions."
+            exit 1
+          fi

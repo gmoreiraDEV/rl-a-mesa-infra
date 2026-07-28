@@ -15,3 +15,4 @@ docker compose up -d
 O Compose local usa somente valores fictícios. Produção exige banco, realms, buckets,
 credenciais, webhooks e domínios exclusivos da Rebeca Lima.
 
+Procedimentos de backup, restauração, retenção e incidentes estão em `OPERATIONS.md`.
