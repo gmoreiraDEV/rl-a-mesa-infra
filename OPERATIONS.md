@@ -32,3 +32,10 @@ resultado do smoke test.
 Revogue segredos comprometidos antes do redeploy. Webhooks repetidos permanecem seguros pela
 idempotência persistida. Mensagens em DLQ exigem inspeção do erro seguro, correção e replay
 controlado com o mesmo `EventEnvelope.id`.
+
+## Tópicos Kafka
+
+Execute `scripts/create-kafka-topics.sh` com `KAFKA_BOOTSTRAP_SERVERS`,
+`KAFKA_PARTITIONS` e `KAFKA_REPLICATION_FACTOR` adequados ao ambiente. O script é idempotente
+e deve rodar antes dos workers. Produção deve usar replication factor compatível com o cluster;
+DLQs exigem análise e replay controlado, nunca consumo automático.

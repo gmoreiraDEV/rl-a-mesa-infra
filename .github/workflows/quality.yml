@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker compose config --quiet
+      - run: bash -n scripts/*.sh
       - run: |
           if grep -R --line-number -E 'image: .+:latest' docker-compose.yml; then
             echo "Container images must use pinned versions."

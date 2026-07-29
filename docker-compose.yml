@@ -34,6 +34,25 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "false"
+    healthcheck:
+      test: [CMD-SHELL, "/opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  kafka-init:
+    image: apache/kafka:4.0.0
+    depends_on:
+      kafka:
+        condition: service_healthy
+    entrypoint: ["/bin/bash", "/opt/a-mesa/create-kafka-topics.sh"]
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_PARTITIONS: 3
+      KAFKA_REPLICATION_FACTOR: 1
+    volumes:
+      - ./scripts/create-kafka-topics.sh:/opt/a-mesa/create-kafka-topics.sh:ro
+    restart: "no"
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.6.3

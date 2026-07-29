@@ -16,3 +16,5 @@ O Compose local usa somente valores fictícios. Produção exige banco, realms, 
 credenciais, webhooks e domínios exclusivos da Rebeca Lima.
 
 Procedimentos de backup, restauração, retenção e incidentes estão em `OPERATIONS.md`.
+O serviço one-shot `kafka-init` cria explicitamente tópicos versionados e respectivas DLQs;
+a criação automática permanece desabilitada.
