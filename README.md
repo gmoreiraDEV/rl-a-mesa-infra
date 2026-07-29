@@ -18,3 +18,7 @@ credenciais, webhooks e domínios exclusivos da Rebeca Lima.
 Procedimentos de backup, restauração, retenção e incidentes estão em `OPERATIONS.md`.
 O serviço one-shot `kafka-init` cria explicitamente tópicos versionados e respectivas DLQs;
 a criação automática permanece desabilitada.
+
+Os executáveis `scripts/staging-smoke.sh` e `scripts/restore-drill.sh` validam, respectivamente,
+uma homologação já publicada e a restauração em banco descartável. Ambos possuem guardas que
+recusam alvo de produção; parâmetros e evidências exigidas estão em `OPERATIONS.md`.

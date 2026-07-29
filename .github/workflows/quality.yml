@@ -17,6 +17,16 @@ jobs:
       - run: docker compose config --quiet
       - run: bash -n scripts/*.sh
       - run: |
+          if ENVIRONMENT=production ALLOW_RESTORE_DRILL=yes \
+            scripts/restore-drill.sh /tmp/nonexistent.dump; then
+            echo "Restore drill production guard failed."
+            exit 1
+          fi
+          if SMOKE_TARGET=production scripts/staging-smoke.sh; then
+            echo "Staging smoke target guard failed."
+            exit 1
+          fi
+      - run: |
           if grep -R --line-number -E 'image: .+:latest' docker-compose.yml; then
             echo "Container images must use pinned versions."
             exit 1

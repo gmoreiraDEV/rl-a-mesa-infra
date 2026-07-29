@@ -17,15 +17,42 @@ um identificador de janela de backup para permitir restauração coerente.
 
 ## Restauração
 
+Para o ensaio periódico, crie um banco vazio e descartável cujo nome termine obrigatoriamente
+em `_restore_drill`. O script valida o checksum quando houver um arquivo
+`backup.dump.sha256`, restaura, aplica as migrações independentes dos 12 bounded contexts e
+confere schemas e contagens mínimas:
+
+```bash
+ENVIRONMENT=staging \
+ALLOW_RESTORE_DRILL=yes \
+RESTORE_DATABASE_URL=postgresql://.../amesa_restore_drill \
+BACKEND_DIR="/caminho/absoluto/backend" \
+./scripts/restore-drill.sh /caminho/absoluto/backup.dump
+```
+
+O script não cria nem remove bancos e nunca troca tráfego. A limpeza permanece uma ação
+explícita do operador. Registre o hash do backup, origem, horário de início e fim, operador,
+resultado das migrações, contagens verificadas e tempo total de recuperação.
+
+Para uma restauração real:
+
 1. crie banco vazio em ambiente isolado;
 2. valide checksum;
-3. defina `RESTORE_DATABASE_URL` e `ALLOW_RESTORE=yes`;
-4. execute `scripts/restore-postgres.sh /caminho/backup.dump`;
-5. execute migrações, smoke tests e conferência de contagens;
+3. restaure e execute migrações;
+4. rode smoke tests e confira registros críticos;
+5. obtenha aprovação operacional;
 6. somente então altere tráfego ou DNS.
 
 Nunca teste restauração diretamente em produção. Registre operador, data, origem do backup e
 resultado do smoke test.
+
+## Smoke de staging
+
+`scripts/staging-smoke.sh` exige `SMOKE_TARGET=staging`, URLs públicas de API, app e
+backoffice e tokens temporários do membro e da administradora fictícios. O fluxo é somente
+leitura e não inicia checkout. Ele valida catálogo, autenticação, isolamento entre clientes,
+biblioteca, projeção de auditoria e bloqueio de indexação administrativa. Veja
+`../docs/demo-data.md` para a chamada completa.
 
 ## Incidentes
 
