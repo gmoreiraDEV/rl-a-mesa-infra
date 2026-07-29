@@ -15,6 +15,17 @@ Retenção inicial: 7 diários, 4 semanais e 12 mensais, sujeita à política LG
 Arquivos privados usam versionamento e lifecycle do bucket. Banco e bucket devem compartilhar
 um identificador de janela de backup para permitir restauração coerente.
 
+## Storage privado
+
+Mantenha buckets ou prefixos independentes por ambiente, sem acesso público e com credencial
+limitada ao `media_service`. Aplique `config/r2-cors.example.json` com a origem exata do
+backoffice. CORS com wildcard, domínio público do bucket ou credencial compartilhada entre
+ambientes são proibidos.
+
+Configure lifecycle para remover objetos temporários sob `pending/` após 24 horas. Não remova
+versões finais automaticamente antes da aprovação da política de retenção/LGPD. URLs assinadas
+e seus query params não podem aparecer em logs, métricas ou ferramentas de analytics.
+
 ## Restauração
 
 Para o ensaio periódico, crie um banco vazio e descartável cujo nome termine obrigatoriamente

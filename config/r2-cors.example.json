@@ -1,0 +1,18 @@
+[
+  {
+    "AllowedOrigins": [
+      "https://admin.staging.example"
+    ],
+    "AllowedMethods": [
+      "PUT"
+    ],
+    "AllowedHeaders": [
+      "Content-Type",
+      "X-Amz-Meta-Sha256"
+    ],
+    "ExposeHeaders": [
+      "ETag"
+    ],
+    "MaxAgeSeconds": 3600
+  }
+]

@@ -22,3 +22,6 @@ a criação automática permanece desabilitada.
 Os executáveis `scripts/staging-smoke.sh` e `scripts/restore-drill.sh` validam, respectivamente,
 uma homologação já publicada e a restauração em banco descartável. Ambos possuem guardas que
 recusam alvo de produção; parâmetros e evidências exigidas estão em `OPERATIONS.md`.
+
+`config/r2-cors.example.json` é a base restritiva para upload assinado pelo backoffice. Troque
+a origem fictícia pelo domínio exato de cada ambiente antes de aplicar ao bucket privado.
