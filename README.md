@@ -36,3 +36,6 @@ subdiretório evita que entradas do filesystem na raiz do volume sejam lidas com
 
 Cada deployment acionado pelo GitHub deve carregar o `railway.json` da raiz, garantindo o
 Dockerfile explícito e impedindo que o serviço seja detectado incorretamente pelo Railpack.
+
+`scripts/provision-keycloak.sh` cria ou atualiza realms, roles, clientes OIDC, audience mapper
+e service account sem gravar segredos. O script exige URLs e credenciais via ambiente.
