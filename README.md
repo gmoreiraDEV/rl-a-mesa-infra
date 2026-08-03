@@ -32,3 +32,6 @@ O serviço `event-bus` usa este repositório como origem de deploy por push. A i
 `railway/kafka/Dockerfile` preserva o Kafka upstream e inicia como root porque volumes Railway
 novos são montados sem permissão de escrita para o UID 1000 da imagem oficial. O broker
 permanece somente na rede privada e persiste KRaft em `/var/lib/kafka/data`.
+
+Cada deployment acionado pelo GitHub deve carregar o `railway.json` da raiz, garantindo o
+Dockerfile explícito e impedindo que o serviço seja detectado incorretamente pelo Railpack.
