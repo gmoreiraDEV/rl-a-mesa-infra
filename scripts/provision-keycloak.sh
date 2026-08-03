@@ -32,6 +32,27 @@ ensure_realm() {
     echo "Unable to inspect realm ${realm}: HTTP ${status}" >&2
     return 1
   fi
+
+  curl --fail --silent --show-error --header "${auth_header}" \
+    "${base_url}/admin/realms/${realm}" | \
+    jq --arg display_name "$(realm_display_name "${realm}")" '. + {
+      displayName:$display_name,
+      loginTheme:"a-mesa",
+      internationalizationEnabled:true,
+      defaultLocale:"pt-BR",
+      supportedLocales:["pt-BR"]
+    }' | \
+    curl --fail --silent --show-error --request PUT \
+      --header "${auth_header}" --header 'Content-Type: application/json' \
+      --data-binary @- "${base_url}/admin/realms/${realm}"
+}
+
+realm_display_name() {
+  case "$1" in
+    a-mesa) printf '%s' 'À MESA' ;;
+    a-mesa-admin) printf '%s' 'À MESA — Administração' ;;
+    *) printf '%s' "$1" ;;
+  esac
 }
 
 ensure_role() {

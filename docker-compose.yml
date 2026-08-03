@@ -61,6 +61,8 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: local_only_password
     ports: ["8080:8080"]
+    volumes:
+      - ./keycloak/themes/a-mesa:/opt/keycloak/themes/a-mesa:ro
 
 volumes:
   postgres_data:

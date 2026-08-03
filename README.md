@@ -39,3 +39,14 @@ Dockerfile explícito e impedindo que o serviço seja detectado incorretamente p
 
 `scripts/provision-keycloak.sh` cria ou atualiza realms, roles, clientes OIDC, audience mapper
 e service account sem gravar segredos. O script exige URLs e credenciais via ambiente.
+
+## Tema do Keycloak
+
+O tema `keycloak/themes/a-mesa` personaliza as telas de autenticação e herda do tema
+`keycloak.v2`, mantendo os fluxos nativos do Keycloak 26. O Compose monta o diretório em modo
+somente leitura. O provisionamento aplica o tema aos realms `a-mesa` e `a-mesa-admin`, ativa a
+internacionalização e define português do Brasil (`pt-BR`) como único idioma disponível.
+
+As mensagens cobrem login, recuperação e atualização de senha, confirmação de e-mail, perfil,
+OTP, expiração de página e erros. Mensagens não sobrescritas continuam vindo da tradução
+portuguesa incluída no Keycloak.
