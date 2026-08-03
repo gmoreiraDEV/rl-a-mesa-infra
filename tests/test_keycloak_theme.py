@@ -42,6 +42,17 @@ class KeycloakThemeTest(unittest.TestCase):
             "./keycloak/themes/a-mesa:/opt/keycloak/themes/a-mesa:ro", compose
         )
 
+    def test_v31_railway_image_contains_the_custom_theme(self) -> None:
+        dockerfile = (INFRA_ROOT / "keycloak/Dockerfile").read_text()
+        railway = (INFRA_ROOT / "keycloak/railway.json").read_text()
+
+        self.assertIn(
+            "COPY --chown=1000:0 themes/a-mesa /opt/keycloak/themes/a-mesa",
+            dockerfile,
+        )
+        self.assertIn('"dockerfilePath": "Dockerfile"', railway)
+        self.assertIn('"/themes/**"', railway)
+
     def test_provisioning_applies_theme_and_locale(self) -> None:
         provision = (INFRA_ROOT / "scripts/provision-keycloak.sh").read_text()
 
