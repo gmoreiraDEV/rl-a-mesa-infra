@@ -11,8 +11,6 @@
   },
   "deploy": {
     "startCommand": "/opt/keycloak/bin/kc.sh start --http-enabled=true --http-port=${PORT:-8080} --hostname-strict=false --proxy-headers=xforwarded",
-    "healthcheckPath": "/health/ready",
-    "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
