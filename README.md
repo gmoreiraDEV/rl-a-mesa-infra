@@ -28,8 +28,8 @@ a origem fictícia pelo domínio exato de cada ambiente antes de aplicar ao buck
 
 ## Railway
 
-O serviço `event-bus` usa este repositório como origem de deploy por push. A imagem em
-`railway/kafka/Dockerfile` preserva o Kafka upstream e inicia como root porque volumes Railway
+O serviço `event-bus` usa este repositório como origem de deploy por push. O `Dockerfile` da
+raiz preserva o Kafka upstream e inicia como root porque volumes Railway
 novos são montados sem permissão de escrita para o UID 1000 da imagem oficial. O broker
 permanece somente na rede privada e persiste KRaft em `/var/lib/kafka/data`.
 
